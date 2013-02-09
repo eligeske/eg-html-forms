@@ -21,20 +21,21 @@
 		</style>
 		<script>		
 			$(function(){
-				UploadList('upload-container');
+				UploadList('upload-container', "files");
 			});
 			
-			var UploadList = function(containerId){
+			var UploadList = function(containerId, name){
 				var self = this;
 				var isIE = (navigator.appName == 'Microsoft Internet Explorer');
 				var uc = $('#'+containerId);
+				var inputName = name + "[]";
 				
 				var addNewUpload = function(){
 					uc.append(uploadInput());
 				}
 				var uploadInput = function(){
 					var cont = $('<div>',  { 'class':'file-container' });
-					var inp = $('<input>', { type: "file", 'class': 'file-input', name: "files[]" });
+					var inp = $('<input>', { type: "file", 'class': 'file-input', name: inputName });
 					var add = $('<div>',   { html: "add", 'class': 'file-add' });
 					var nm = $('<span>',   { 'class': 'file-name' });
 					var rmv = $('<span>',  { html: "remove", 'class': 'file-remove' });
