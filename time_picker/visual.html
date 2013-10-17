@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>index</title>
+		<style>
+			body { font-family: helvetica; }
+			.browser, .nests { padding: 10px; border: 1px solid #ccc; }
+			.browser span:last-child, .nests span:last-child  { margin-left: 10px; font-weight: bold; text-transform: capitalize; }
+			.nests { border: none; }
+			#nested div { display: block;  }
+			.child { border-top: 4px solid yellow; padding: 5px 0 0 0; margin: 0; }
+			.count { font-size: 8px; }
+		</style>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script>
+
+			
+			var timepicker = function(ele, settings){
+				var self = this;
+				var ele = ele;
+				var offset = $(ele).offset();
+				var hours;
+				var mins;
+				
+				var _construct = function(){
+					createBoxes();
+				}
+				var createBoxes = function(){
+					hours = $("<div>", { "class":"timepicker-hours" });
+					cells(hours,1,12);
+					hours.insertAfter(ele);
+					
+					mins = $("<div>", { "class":"timepicker-mins" });
+					cells(mins,0,59,true);
+					mins.insertAfter(ele);
+				}				
+				var cells = function(ele,start,end,leadingZero){
+					for(i=start;i<(end+1);i++){
+						if(leadingZero){
+							var x = i.length == 1?"0"+i:i;	
+						}else{
+							var x = i;
+						}
+						ele.append($("<div>",{ html: x }));
+					}
+				}
+				_construct();
+			}
+			
+			
+		</script>
+		<script>
+			var numberCells = function(start,end,leadingZero){
+				
+			}
+			$(function(){
+				new timepicker($("#time"));
+				
+			});
+		</script>
+		<style>
+			.timepicker-hours, 
+			.timepicker-mins { border: 1px solid #ccc; font-family: Arial, Helvetica, sans-serif; line-height: 12px; }
+			.timepicker-mins{ width: 155px; }
+			.timepicker-hours { width: 90px }
+			.timepicker-hours div, 
+			.timepicker-mins div{ display: inline-block; padding:0; margin: 0; text-align: center; 
+								   font-size: 10px;  width: 15px; height: 20px;
+								   border-top: none; border-left: none;
+								   border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; }
+		</style>
+	</head>
+
+	<body>
+		<div>
+			<div id="cont">
+				<div class="timepicker-hours">
+					<script>numberCells(1,12)</script>
+				</div>
+				<div class="timepicker-mins">
+					<script>numberCells(0,59,true)</script>
+				</div>
+				<input id="time">
+				
+			</div>
+		</div>
+	</body>
+</html>

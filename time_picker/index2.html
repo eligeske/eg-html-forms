@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>index</title>
+		<style>
+			body { font-family: helvetica; }
+			.browser, .nests { padding: 10px; border: 1px solid #ccc; }
+			.browser span:last-child, .nests span:last-child  { margin-left: 10px; font-weight: bold; text-transform: capitalize; }
+			.nests { border: none; }
+			#nested div { display: block;  }
+			.child { border-top: 4px solid yellow; padding: 5px 0 0 0; margin: 0; }
+			.count { font-size: 8px; }
+		</style>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script>
+			 var timeSelect = function (value) {
+                var value = (value != undefined)?value:false;
+                var next = false;
+                var time = [];
+                var select = document.createElement('select');
+				var option = document.createElement('option');
+                $(select).append(option);
+                var timeLast = [];
+                var ar = [];
+
+                for (this.i = 1; this.i < 13; this.i++) {
+                    
+                    if ((ar.length + 1) % 2) {
+                        var x = this.i + ':00'; ar.push(x);
+                        this.i--;
+                    } else {
+                        var x = this.i + ':30'; ar.push(x);
+                    }
+                    if (x == "12:00" || x == "12:30") {
+                        time.push(x);
+                    } else {
+                        timeLast.push(x);
+                    }
+                }
+                time = time.concat(timeLast);
+                $.each(time, function (i, x) {
+                    var option = document.createElement('option');
+                    $(option).html(x);
+                    if (x == value) { option.setAttribute('selected', 'true'); }
+                    $(select).append(option);
+                });
+                return select;
+            }
+            var suffixSelect = function (value) {
+                var value = (value != undefined)?value:false;
+                var options = ['am', 'pm'];
+                var select = document.createElement('select');
+                $.each(options, function (i, item) {
+                    var option = document.createElement('option');
+                    $(option).html(item);
+                    if (item == value) { option.setAttribute('selected', 'true'); }
+                    $(select).append(option);
+                });
+                return select;
+            }
+            
+            var from = function(){
+            	var self = this;
+            	var span = document.createElement('span');
+            	var time = timeSelect();
+            	var suffix = suffixSelect();
+            	
+            	this.GetToValue = function(){}
+            	time.onchange = function(){ console.log(self.GetToValue()) };
+            	$(span).append(time).append(suffix);
+            	
+            	this.Html = span;
+            }
+            var to = function(){
+            	var span = document.createElement('span');
+            	var time = timeSelect();
+            	var suffix = suffixSelect();
+            	this.GetValue = function(){
+            		return {
+            			time: time.options[time.selectedIndex].value,
+            			suffix: suffix.options[suffix.selectedIndex].value
+            		}
+            	}
+            	$(span).append(time).append(suffix);
+            	
+            	this.Html = span;
+            }            
+            var timePicker = function(){
+            	var span = document.createElement('span');
+            	
+            	var fr = new from();
+            	var t = new to();
+            	fr.GetToValue = t.GetValue;
+            	
+            	$(span).append(fr.Html).append(' - ').append(t.Html);
+            	return span;
+            }
+			$(function(){
+				$('#cont').append(new timePicker());			
+			});
+		</script>
+	</head>
+
+	<body>
+		<div>
+			<div id="cont">
+				
+				
+			</div>
+		</div>
+	</body>
+</html>
